@@ -229,10 +229,13 @@ void parse_args(py::list &args, py::list do_not_specialize,
       // copy param
       std::memcpy(params_ptr, &value, 8);
       params_ptr += 8;
-      // udpate cache key
+      // update cache key
       cache_key += dtype_cache_key_part(arg.attr("dtype"));
       cache_key += "*";
       cache_key += "[multipleof(";
+      if (arg.attr("is_cuda").ptr() != Py_True) {
+          throw std::runtime_error("argument tensor #" + std::to_string(i) + " is not on cuda! " + std::string(py::str(arg)));
+      }
       size_t range_size = get_pointer_range_size(value);
       cache_key += std::to_string(
           std::min(pow2_divisor(value), pow2_divisor(range_size)));
