@@ -223,6 +223,7 @@ class CMakeBuild(build_ext):
             "-DTRITON_BUILD_PYTHON_MODULE=ON",
             "-DPython3_EXECUTABLE:FILEPATH=" + sys.executable,
             "-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON",
+            "-DCMAKE_EXE_LINKER_FLAGS=-Wl,--build-id=sha1",
             "-DPYTHON_INCLUDE_DIRS=" + python_include_dir,
         ]
         if lit_dir is not None:
